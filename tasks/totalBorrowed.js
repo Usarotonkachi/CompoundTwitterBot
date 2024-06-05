@@ -1,7 +1,34 @@
 const { initializeContracts, networks } = require('../networks');
 const { ethers } = require('ethers');
 require('dotenv').config();
-const TwitterApi = require('twitter-api-v2');
+const { TwitterApi } = require("twitter-api-v2");
+
+
+function insertSpaces(str) {
+ 
+  const chars = str.split('');
+
+  for (let i = chars.length - 3; i > 0; i -= 3) {
+    chars.splice(i, 0, ' ');
+  }
+
+  return chars.join('');
+}
+
+
+function numberToSpacedString(num) {
+
+  const numStr = num.toString();
+
+  const decimalIndex = numStr.indexOf('.');
+
+  if (decimalIndex === -1) {
+    return insertSpaces(numStr);
+  }
+
+  const integerPart = numStr.slice(0, decimalIndex);
+  return insertSpaces(integerPart);
+}
 
 
 let weth = 1;
@@ -69,18 +96,31 @@ async function execute(cometContract, network, assetName){
 
 
 (async () => {
+
+  console.log('totalBorrowed execution');
+
+  let tweetText = '';
+  
+
+  let networkList = '';
+
+  for (const [chain, networkContracts] of Object.entries(networks)){
+    networkList += `${chain}, `;
+  }
+  let listn = networkList.substring(0, networkList.length - 2);
+
+  tweetText += `\u{1F4B0} Total borrowed value in Compound \u{1F4B0} (${listn}):\n\n`;
+
   try {
     const contracts = await initializeContracts();
 
-    const data = {};
     let totalCompoundBorrowed = 0;
 
     for (const [network, networkContracts] of Object.entries(contracts)) {
       for (const { contract, assetName } of networkContracts) {
         console.log(`Working with contract ${assetName} on network ${network}:`);
         const totalBor = await execute(contract, network, assetName);
-        //console.log(totalBor);
-        //console.log(weth);
+        
         let borrowedUSD = 0;
         if(assetName === 'ETH'){
             
@@ -89,130 +129,37 @@ async function execute(cometContract, network, assetName){
             borrowedUSD = Number(totalBor) / 10**6;
         }
         totalCompoundBorrowed += borrowedUSD;
-        console.log(`Data for ${assetName} on ${network}:`, borrowedUSD);
+        
       }
     }
-    console.log(totalCompoundBorrowed);
+
+    tweetText += `Total borrowed value in USD: ${numberToSpacedString(totalCompoundBorrowed.toFixed(0))}\u{1F4B2}\n`;
   } catch (error) {
     console.error('Error in main execution:', error);
   }
+
+  console.log(tweetText);
+  console.log(tweetText.length);
+
+  const client = new TwitterApi({
+    appKey: process.env.TWITTER_API_KEY,
+    appSecret: process.env.TWITTER_API_SECRET,
+    accessToken: process.env.TWITTER_ACCESS_TOKEN,
+    accessSecret: process.env.TWITTER_ACCESS_SECRET,
+    bearerToken: process.env.BEARER_TOKEN,
+  });
+
+  const rwClient = client.readWrite;
+
+  const textTweet = async () => {
+    try {
+      await rwClient.v2.tweet(tweetText);
+      console.log("success");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  textTweet();
+
 })();
-
-/*
-const client = new TwitterApi({
-  appKey: process.env.TWITTER_API_KEY,
-  appSecret: process.env.TWITTER_API_SECRET,
-  accessToken: process.env.TWITTER_ACCESS_TOKEN,
-  accessSecret: process.env.TWITTER_ACCESS_SECRET,
-});
-
-// Формируем текст твита на основе данных
-let tweetText = '';
-tweetText += 'Data for USDC on ARBITRUM:\n';
-networkData.forEach((assetData, index) => {
-  tweetText += `   ${index + 1}) ${assetData.symbol}\n`;
-  tweetText += `        Oracle price: ${assetData['Oracle price'].toFixed(2)}\n`;
-  tweetText += `        Collateral factor: ${assetData['Collateral factor'].toFixed(2)}\n`;
-  tweetText += `        Liquidation factor: ${assetData['Liquidation factor'].toFixed(2)}\n`;
-  tweetText += `        Liquidation penalty: ${assetData['Liquidation penalty'].toFixed(2)}\n`;
-});
-
-// Отправляем твит
-client.v1.tweet(tweetText).then((tweet) => {
-  console.log('Твит успешно опубликован:', tweet);
-}).catch((error) => {
-  console.error('Ошибка при отправке твита:', error);
-});
-  
-
-*/
-
-/*
-const data = [];
-const assetsUnderlyings = [];
-
-
-async function main(){
-
-    const underToAsset = {};
-
-
-    for(let i = 0; i < 5; i++){
-   
-        const assetInfo = await cometContract.getAssetInfo(i);
-       
-        assetsUnderlyings.push(assetInfo[1]);
-        underToAsset[assetInfo[1]] = assetInfo[2];
-    }
-
-    let number = 0;
-
-
-    for(const asset of assetsUnderlyings){
-
-        number++;
-
-        const underlyingABI = '[{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"}, {"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"}]';
-        const underlyingContract = new ethers.Contract(asset, underlyingABI, wallet);
-
-        const symbol = await underlyingContract.symbol();
-        const decimals = await underlyingContract.decimals();
-
-        const totalCol = await cometContract.totalsCollateral(asset);
-
-
-        const price = await cometContract.getPrice(underToAsset[asset]);
-        const collateral = Number(totalCol[0]) / 10**Number(decimals);
-        const tvl = collateral * (Number(price) / 10**8);
-
-        const tokenData = {};
-
-        tokenData['number'] = number;
-        tokenData['symbol'] = symbol;
-        tokenData['Collateral'] = collateral;
-        tokenData['asset'] = asset;
-        tokenData['tvl'] = tvl;
-
-        data.push(tokenData);
-        console.log(tokenData);
-
-    }
-    
-*/
-/*
-    const markets = await controller.getAllMarkets();
-
-    console.log(markets);
-
-    
-    for (const market of markets){
-
-        number++;
-        
-        const tokenABI = '[{"inputs":[],"name":"underlying","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}]';
-        const tokenContract = new ethers.Contract(market, tokenABI, wallet);
-        const underlying = await tokenContract.underlying();
-
-        const underlyingABI = '[{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"}]';
-        const underlyingContract = new ethers.Contract(underlying, underlyingABI, wallet);
-
-        const symbol = await underlyingContract.symbol();
-        
-        const totalCol = await cometContract.totalsCollateral(underlying);
-        console.log(totalCol);
-        const tokenData = {};
-
-        tokenData['number'] = number;
-        tokenData['symbol'] = symbol;
-        tokenData['Collateral'] = totalCol / 10**18;
-        tokenData['address'] = market;
-
-        data.push(tokenData);
-        console.log(tokenData);
-    }
-*/
-
-
-
-//main();
-//console.log(data);

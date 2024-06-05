@@ -1,0 +1,135 @@
+📊 Supplied assets 📊
+
+ETHEREUM:
+
+🪙  COMP
+    Price: 62.27💲
+    Collateral: 791308.98
+    TVL: 49278766.64💲
+
+🪙  WBTC
+    Price: 67506.18💲
+    Collateral: 7688.28
+    TVL: 519006654.62💲
+
+🪙  WETH
+    Price: 3769.75💲
+    Collateral: 143521.21
+    TVL: 541038620.35💲
+
+🪙  UNI
+    Price: 10.57💲
+    Collateral: 1193414.25
+    TVL: 12619520.31💲
+
+🪙  LINK
+    Price: 19.07💲
+    Collateral: 1825853.30
+    TVL: 34823678.98💲
+
+🪙  cbETH
+    Price: 4031.78💲
+    Collateral: 1245.63
+     TVL: 5022099.83💲
+
+🪙  wstETH
+    Price: 4402.84💲
+    Collateral: 30972.07
+     TVL: 136364962.99💲
+
+🪙  rETH
+    Price: 4174.57💲
+    Collateral: 4350.69
+     TVL: 18162244.79💲
+
+###
+
+OPTIMISM:
+
+🪙  OP
+    Price: 2.53💲
+    Collateral: 430404.17
+    TVL: 1089352.97💲
+
+🪙  WETH
+    Price: 3780.82💲
+    Collateral: 864.95
+    TVL: 3270238.81💲
+
+🪙  WBTC
+    Price: 67725.18💲
+    Collateral: 24.10
+    TVL: 1632166.21💲
+
+###
+
+POLYGON:
+
+🪙  WETH
+    Price: 3784.01💲
+    Collateral: 1226.82
+    TVL: 4642305.13💲
+
+🪙  WBTC
+    Price: 67722.85💲
+    Collateral: 280.34
+    TVL: 18985190.99💲
+
+🪙  WMATIC
+    Price: 0.73💲
+    Collateral: 13495710.11
+    TVL: 9813272.14💲
+
+🪙  MaticX
+    Price: 0.81💲
+    Collateral: 316892.31
+    TVL: 256254.18💲
+
+🪙  stMATIC
+    Price: 0.81💲
+    Collateral: 5590350.27
+    TVL: 4551470.49💲
+
+###
+
+ARBITRUM:
+
+🪙  ARB
+    Price: 1.16💲
+    Collateral: 5935760.40
+    TVL: 6899751.22💲
+
+🪙  GMX
+    Price: 34.13💲
+    Collateral: 6020.32
+    TVL: 205447.64💲
+
+🪙  WETH
+    Price: 3783.56💲
+    Collateral: 4852.90
+    TVL: 18361229.33💲
+
+🪙  WBTC
+    Price: 67697.80💲
+    Collateral: 301.84
+    TVL: 20434133.55💲
+
+🪙  ARB
+    Price: 1.16💲
+    Collateral: 427067.53
+    TVL: 496424.98💲
+
+🪙  GMX
+    Price: 34.13💲
+    Collateral: 375.72
+    TVL: 12821.88💲
+
+🪙  WETH
+    Price: 3783.56💲
+    Collateral: 741.22
+    TVL: 2804449.01💲
+
+🪙  WBTC
+    Price: 67697.80💲
+    Collateral: 15.85
+    TVL: 1072810.26💲

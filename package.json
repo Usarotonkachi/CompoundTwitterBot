@@ -1,8 +1,13 @@
 {
   "dependencies": {
+    "canvas": "^2.11.2",
+    "canvas-emoji": "^1.1.9",
     "dotenv": "^16.4.5",
     "ethers": "^6.12.1",
+    "fs": "^0.0.1-security",
     "node-cron": "^3.0.3",
-    "twitter-api-v2": "^1.17.0"
+    "path": "^0.12.7",
+    "twitter-api-v2": "^1.17.0",
+    "twitter-text": "^3.1.0"
   }
 }
