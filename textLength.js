@@ -7,6 +7,6 @@ console.log('emoji 5: \u{2696} \u{2696} \u{2696}!');
 console.log('emoji 6: \u{1F4B8} \u{1F4B8} \u{1F4B8}!');
 console.log('emoji 7: \u{1F4DC} \u{1F4DC} \u{1F4DC}!');
 
-console.log('emoji coin: \u{1FA99} \u{1FA99} \u{1FA99}    \u{270D}  \u{270D}  \u{270D} ');
+console.log('emoji coin: \u{1FA99} \u{1FA99} \u{1FA99}    \u{1F3C6}  \u{270D}  \u{270D} ');
 
 

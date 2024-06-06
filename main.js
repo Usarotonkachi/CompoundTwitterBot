@@ -1,39 +1,34 @@
 const cron = require('node-cron');
 const { exec } = require('child_process');
 
-const tasks = [
-  'tasks/governance.js',
-  'tasks/topSuppliedData.js',
-  'tasks/suppliedData.js',
-  'tasks/APRMarkets.js',
-  'tasks/totalBorrowed.js',
-  'tasks/utilization.js',
-  'tasks/topBorrowed.js',
-];
+const dayTasks = {
+  0: 'tasks/governance.js',
+  1: 'tasks/topSuppliedData.js',
+  2: 'tasks/suppliedData.js',
+  3: 'tasks/APRMarkets.js',
+  4: 'tasks/totalBorrowed.js',
+  5: 'tasks/utilization.js',
+  6: 'tasks/topBorrowed.js',
+};
 
-function scheduleTasks() {
-  // Запуск задачи каждые 10 минут
-  cron.schedule('*/10 * * * *', () => {
-    const currentMinute = new Date().getMinutes();
-    const scriptIndex = Math.floor(currentMinute / 10) % tasks.length;
-    const taskFile = tasks[scriptIndex];
+function scheduleDailyTask() {
+  
+  cron.schedule('0 15 * * *', () => {
+    const today = new Date().getDay();
+    const taskFile = dayTasks[today];
 
-    if (taskFile) {
-      exec(`node ${taskFile}`, (error, stdout, stderr) => {
-        if (error) {
-          console.error(`Error executing task for minute ${currentMinute}:`, error);
-          return;
-        }
-        if (stderr) {
-          console.error(`Error output for task ${currentMinute}:`, stderr);
-          return;
-        }
-        console.log(`Output for task ${currentMinute}:`, stdout);
-      });
-    } else {
-      console.error(`No task defined for minute ${currentMinute}`);
-    }
+    exec(`node ${taskFile}`, (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Error executing task for day ${today}:`, error);
+        return;
+      }
+      if (stderr) {
+        console.error(`Error output for task ${today}:`, stderr);
+        return;
+      }
+      console.log(`Output for task ${today}:`, stdout);
+    });
   });
 }
 
-scheduleTasks();
+scheduleDailyTask();
