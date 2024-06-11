@@ -5,7 +5,9 @@ const {
   ETHEREUM_ASSETS,
   OPTIMISM_ASSETS,
   POLYGON_ASSETS,
-  ARBITRUM_ASSETS
+  ARBITRUM_ASSETS,
+  BASE_ASSETS,
+  SCROLL_ASSETS
 } = require('./addresses');
 
 // Загружаем RPC URL-ы из переменных окружения
@@ -26,8 +28,6 @@ const networks = {
     rpcUrl: process.env.ARBITRUM_RPC_URL,
     assets: ARBITRUM_ASSETS,
   },
-
-/*
   BASE: {
     rpcUrl: process.env.BASE_RPC_URL,
     assets: BASE_ASSETS,
@@ -36,7 +36,6 @@ const networks = {
     rpcUrl: process.env.SCROLL_RPC_URL,
     assets: SCROLL_ASSETS,
   },
-*/
 
 };
 

@@ -109,7 +109,7 @@ async function execute(cometContract, network, assetName){
   }
   let listn = networkList.substring(0, networkList.length - 2);
 
-  tweetText += `\u{1F4B0} Total borrowed value in Compound \u{1F4B0} (${listn}):\n\n`;
+  tweetText += `\u{1F4B0} Total borrowed value in Compound \u{1F4B0}\n\n`;
 
   try {
     const contracts = await initializeContracts();
@@ -160,6 +160,6 @@ async function execute(cometContract, network, assetName){
     }
   };
 
-  textTweet();
+  //textTweet();
 
 })();

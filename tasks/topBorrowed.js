@@ -2,6 +2,7 @@ const { initializeContracts, networks } = require('../networks');
 const { ethers } = require('ethers');
 require('dotenv').config();
 const { TwitterApi } = require("twitter-api-v2");
+const twitterText = require('twitter-text');
 
 
 function insertSpaces(str) {
@@ -30,6 +31,36 @@ function numberToSpacedString(num) {
   return insertSpaces(integerPart);
 }
 
+
+function splitLongString(str) {
+  const maxLength = 280;
+  const delimiter = '\n\n';
+  const parts = [];
+
+  let currentPart = '';
+
+  const chunks = str.split(delimiter);
+
+  for (const chunk of chunks) {
+ 
+    if (currentPart.length + chunk.length > maxLength) {
+  
+      parts.push(currentPart.trim());
+
+      currentPart = chunk;
+    } else {
+
+      currentPart += delimiter + chunk;
+
+    }
+  }
+
+  if (currentPart.trim().length > 0) {
+    parts.push(currentPart.trim());
+  }
+
+  return parts;
+}
 
 
 let weth = 1;
@@ -140,15 +171,28 @@ async function execute(cometContract, network, assetName){
 
   const rwClient = client.readWrite;
 
-  const textTweet = async () => {
+  const textTweet = async (texts) => {
     try {
-      await rwClient.v2.tweet(tweetText);
+      await rwClient.v2.tweetThread(texts);
+      
       console.log("success");
     } catch (error) {
       console.error(error);
     }
   };
+
+  tweetLength = twitterText.getTweetLength(tweetText);
+  console.log(tweetLength);
   
-  textTweet();
+  const parts = splitLongString(tweetText);
+
+  //textTweet(parts);
+  
+  console.log(parts);
+  for(const part of parts){
+    tweetLength = twitterText.getTweetLength(part);
+    console.log(tweetLength);
+    console.log(part);
+  }
 
 })();

@@ -151,7 +151,7 @@ async function execute(cometContract, network, assetsIndexer){
 
   const parts = splitLongString(tweetText);
 
-  textTweet(parts);
+  //textTweet(parts);
   
   console.log(parts);
   for(const part of parts){

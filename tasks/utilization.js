@@ -3,6 +3,35 @@ const { ethers } = require('ethers');
 require('dotenv').config();
 const { TwitterApi } = require("twitter-api-v2");
 
+function splitLongString(str) {
+  const maxLength = 275;
+  const delimiter = '\n\n';
+  const parts = [];
+
+  let currentPart = '';
+
+  const chunks = str.split(delimiter);
+
+  for (const chunk of chunks) {
+    
+    if (currentPart.length + chunk.length > maxLength) {
+      
+      parts.push(currentPart.trim());
+     
+      currentPart = chunk;
+    } else {
+     
+      currentPart += delimiter + chunk;
+    }
+  }
+
+  if (currentPart.trim().length > 0) {
+    parts.push(currentPart.trim());
+  }
+
+  return parts;
+}
+
 
 async function execute(cometContract, network){
   
@@ -56,15 +85,25 @@ async function execute(cometContract, network){
 
   const rwClient = client.readWrite;
 
-  const textTweet = async () => {
+  const textTweet = async (texts) => {
     try {
-      await rwClient.v2.tweet(tweetText);
+      await rwClient.v2.tweetThread(texts);
+      
       console.log("success");
     } catch (error) {
       console.error(error);
     }
   };
   
-  textTweet();
+  //textTweet();
+  const parts = splitLongString(tweetText);
+
+  //textTweet(parts);
+  
+  //console.log(parts);
+  for(const part of parts){
+    tweetLength = twitterText.getTweetLength(part);
+    console.log(tweetLength);
+  }
 
 })();

@@ -35,7 +35,7 @@ function numberToSpacedString(num) {
 
 
 function splitLongString(str) {
-  const maxLength = 280;
+  const maxLength = 275;
   const delimiter = '\n\n';
   const parts = [];
 
@@ -202,7 +202,7 @@ async function execute(cometContract, network, assetName, assetsIndexer){
 
   textTweet(parts);
   
-  console.log(parts);
+  //console.log(parts);
   for(const part of parts){
     tweetLength = twitterText.getTweetLength(part);
     console.log(tweetLength);

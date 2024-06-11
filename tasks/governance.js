@@ -4,6 +4,7 @@ const { othersGovernABI, ethGovernABI } = require('../abi');
 const { networksGover } = require('../addresses');
 const { networks } = require('../networks');
 const { TwitterApi } = require("twitter-api-v2");
+const twitterText = require('twitter-text');
 
 
 
@@ -158,7 +159,10 @@ async function getProposalCreatedEvents(contract) {
           console.error(error);
         }
       };
+
+      tweetLength = twitterText.getTweetLength(tweetText);
+      console.log(tweetLength);
       
-      textTweet();
+      //textTweet();
       
 })();

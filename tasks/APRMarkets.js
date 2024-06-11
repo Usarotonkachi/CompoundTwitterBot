@@ -2,7 +2,7 @@ const { initializeContracts, networks } = require('../networks');
 const { ethers } = require('ethers');
 require('dotenv').config();
 const { TwitterApi } = require("twitter-api-v2");
-
+const twitterText = require('twitter-text');
 
 
 async function execute(cometContract, network){
@@ -61,7 +61,10 @@ async function execute(cometContract, network){
       console.error(error);
     }
   };
+
+  tweetLength = twitterText.getTweetLength(tweetText);
+  console.log(tweetLength);
   
-  textTweet();
+  //textTweet();
   
 })();
